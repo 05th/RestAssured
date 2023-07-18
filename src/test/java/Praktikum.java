@@ -9,6 +9,7 @@ import java.io.File;
 // дополнительный статический импорт нужен, чтобы использовать given(), get() и then()
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class Praktikum {
 
@@ -53,14 +54,17 @@ public class Praktikum {
     public void createNewPlaceAndCheckResponse() {
         //Конструктор класса который связывает файл на компьютере и объект класса file
         File json = new File("src/test/resources/newCard.json");
-        given()
+        Response response =
+                given()
                 .header("Content-type", "application/json")
                 .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
                 .and()
                 .body(json)
                 .when()
-                .post("/api/cards")
-                .then().statusCode(201);
+                .post("/api/cards");
+        response.then().assertThat().body("data._id", notNullValue())
+                .and()
+                .statusCode(201);
     }
 }
 
