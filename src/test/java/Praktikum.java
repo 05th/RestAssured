@@ -40,14 +40,15 @@ public class Praktikum {
                 .get("api/users/me")
                 .then().assertThat().body("data.name", equalTo("Vasya"));
     }
+
     //Проверяем информацию о пользователе используя метод GET
     @Test
     public void checkUserAbout() {
-       Response response =
-               given()
-                .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
-                .get("api/users/me");
-                response.then().assertThat().body("data.about", equalTo("QA Automation Engineer"));
+        Response response =
+                given()
+                        .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+                        .get("api/users/me");
+        response.then().assertThat().body("data.about", equalTo("QA Automation Engineer"));
         System.out.println(response.body().asString());
 
 
@@ -95,18 +96,10 @@ public class Praktikum {
                         .body(json)
                         .when()
                         .patch("api/users/me");
-                        response.then().assertThat().body("data.name", equalTo("Vasya"))
-                                .assertThat().body("data.about", equalTo("QA Automation Engineer"))
-                                .and()
-                                .statusCode(200);
+        response.then().assertThat().body("data.name", equalTo("Vasya"))
+                .assertThat().body("data.about", equalTo("QA Automation Engineer"))
+                .and()
+                .statusCode(200);
         System.out.println(response.body().asString());
     }
-
-    //Удаляем карточку
-    @AfterEach
-    public void cleanUp() {
-
-    }
 }
-
-
