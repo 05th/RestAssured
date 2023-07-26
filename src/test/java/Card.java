@@ -1,7 +1,5 @@
-
-//Здесь мы будем Серелизовать JSON файл в Объект
+//Серилизация то есть превращаем Json файл в объект
 public class Card {
-    //Поля нужно сделать приватными
     // ключ name стал полем типа String
     private String name;
     // ключ link стал полем типа String
@@ -16,8 +14,6 @@ public class Card {
     // конструктор без параметров
     public Card() {
     }
-
-    //К каждому полю можно написать геттеры и сеттеры
 
     // геттер для поля name
     public String getName() {
@@ -37,5 +33,4 @@ public class Card {
     public void setLink(String link) {
         this.link = link;
     }
-
 }

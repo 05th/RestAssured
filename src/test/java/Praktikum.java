@@ -15,6 +15,10 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class Praktikum {
 
+    //Создали объект класса Card и передали в него параметры Json
+    //Card card = new Card("Махачкала", "https://absolutera.ru/uploads/photo/file/17328/_____________4.jpg");
+    //Протокол oauth2 имеет "срок годности" поэтому перенес его в переменную
+    private String oauth2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk3Mzg5MzAsImV4cCI6MTY5MDM0MzczMH0.-nVxnZPuYk-tMpXKwAarrLa-28exA3q0CC81jeO2TTw";
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = "https://qa-mesto.praktikum-services.ru";
@@ -26,7 +30,7 @@ public class Praktikum {
         // метод given() помогает сформировать запрос
         given()
                 // указываем протокол и данные авторизации
-                .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+                .auth().oauth2(oauth2)
                 // отправляем GET-запрос с помощью метода get, недостающую часть URL (ручку) передаём в него в качестве параметра
                 .get("/api/users/me")
                 // проверяем, что статус-код ответа равен 200
@@ -36,7 +40,7 @@ public class Praktikum {
     //Проверяем имя пользователя используя метод GET
     @Test
     public void checkUserName() {
-        given().auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+        given().auth().oauth2(oauth2)
                 .get("api/users/me")
                 .then().assertThat().body("data.name", equalTo("Vasya"));
     }
@@ -46,7 +50,7 @@ public class Praktikum {
     public void checkUserAbout() {
         Response response =
                 given()
-                        .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+                        .auth().oauth2(oauth2)
                         .get("api/users/me");
         response.then().assertThat().body("data.about", equalTo("QA Automation Engineer"));
         System.out.println(response.body().asString());
@@ -60,7 +64,7 @@ public class Praktikum {
         // отправляет запрос и сохраняет ответ в переменную response, экзмепляр класса Response
         Response response =
                 given()
-                        .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw").get("/api/users/me");// проверяет, что в теле ответа ключу name соответствует нужное имя пользователя
+                        .auth().oauth2(oauth2).get("/api/users/me");// проверяет, что в теле ответа ключу name соответствует нужное имя пользователя
         response.then().assertThat().body("data.name", equalTo("Vasya"));
         // выводит тело ответа на экран
         System.out.println(response.body().asString());
@@ -74,7 +78,7 @@ public class Praktikum {
         Response response =
                 given()
                         .header("Content-type", "application/json")
-                        .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+                        .auth().oauth2(oauth2)
                         .and()
                         .body(json)
                         .when()
@@ -91,7 +95,7 @@ public class Praktikum {
         Response response =
                 given()
                         .header("Content-type", "application/json")
-                        .auth().oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk1NjA3OTcsImV4cCI6MTY5MDE2NTU5N30.4HrDvmX8boSU1XOF9PeWyu-QhNWvw5IT71O7cmrwgLw")
+                        .auth().oauth2(oauth2)
                         .and()
                         .body(json)
                         .when()
