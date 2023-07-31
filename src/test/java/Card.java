@@ -1,4 +1,5 @@
 //Серилизация то есть превращаем Json файл в объект
+//Такой класс ещё называют POJO — plain old Java object
 public class Card {
     // ключ name стал полем типа String
     private String name;

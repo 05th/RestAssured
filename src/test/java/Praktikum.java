@@ -16,9 +16,11 @@ import static org.hamcrest.Matchers.notNullValue;
 public class Praktikum {
 
     //Создали объект класса Card и передали в него параметры Json
-    //Card card = new Card("Махачкала", "https://absolutera.ru/uploads/photo/file/17328/_____________4.jpg");
+    Card card = new Card("Махачкала", "https://absolutera.ru/uploads/photo/file/17328/_____________4.jpg");
+    //Создали объект класса User Info и передали в него параметры Json
+    UserInfo userInfo = new UserInfo("Vasya", "QA Automation Engineer");
     //Протокол oauth2 имеет "срок годности" поэтому перенес его в переменную
-    private String oauth2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2ODk3Mzg5MzAsImV4cCI6MTY5MDM0MzczMH0.-nVxnZPuYk-tMpXKwAarrLa-28exA3q0CC81jeO2TTw";
+    private String oauth2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGI0YTZkYzQ1M2NkYzAwNDJmZjNkMWYiLCJpYXQiOjE2OTA0MDkzODYsImV4cCI6MTY5MTAxNDE4Nn0.76A2qtoZHLiiBAhBxCXmygTQMxCHuTrb0_ME-Ln-bX4";
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = "https://qa-mesto.praktikum-services.ru";
@@ -74,13 +76,13 @@ public class Praktikum {
     @Test
     public void createNewPlaceAndCheckResponse() {
         //Конструктор класса который связывает файл на компьютере и объект класса file
-        File json = new File("src/test/resources/newCard.json");
+        //File json = new File("src/test/resources/newCard.json");
         Response response =
                 given()
                         .header("Content-type", "application/json")
                         .auth().oauth2(oauth2)
                         .and()
-                        .body(json)
+                        .body(card)
                         .when()
                         .post("/api/cards");
         response.then().assertThat().body("data._id", notNullValue())
@@ -91,13 +93,13 @@ public class Praktikum {
     @Test
     public void updateUserInformation() {
         //Передадим json прямо в строке
-        String json = "{\"name\": \"Vasya\", \"about\": \"QA Automation Engineer\"}";
+        //String json = "{\"name\": \"Vasya\", \"about\": \"QA Automation Engineer\"}";
         Response response =
                 given()
                         .header("Content-type", "application/json")
                         .auth().oauth2(oauth2)
                         .and()
-                        .body(json)
+                        .body(userInfo)
                         .when()
                         .patch("api/users/me");
         response.then().assertThat().body("data.name", equalTo("Vasya"))
