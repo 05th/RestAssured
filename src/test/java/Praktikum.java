@@ -93,7 +93,7 @@ public class Praktikum {
     @Test
     public void updateUserInformation() {
         //Передадим json прямо в строке
-        //String json = "{\"name\": \"Vasya\", \"about\": \"QA Automation Engineer\"}" ;
+        //String json = "{\"name\": \"Vasya\", \"about\": \"QA Automation Engineer\"}";
         Response response =
                 given()
                         .header("Content-type", "application/json")
